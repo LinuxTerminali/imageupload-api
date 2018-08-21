@@ -30,21 +30,15 @@ def download_image(url, resize, size):
         try:
             image_file_path = absoulte_url.split('/')[-1]
             im = Image.open(requests.get(url, stream=True).raw)
-            print(im.filename, "filename")
             format = im.format
             if '.' not in image_file_path:
                 image_file_path += "."+format
-            print(im)
             if resize:
-                print(resize,size)
                 return resizeImage(im, size, image_file_path, True)
             
             return createFieldImage(im, image_file_path, format)
         except Exception as e:
-            print(e)
             raise ParseError('Invalid image type')
-    #print('Image downloaded from url: {} and saved to: {}.'.format(url, image_file_path))
-    # return
 
 
 def encrypt_username(user_name, user_id):
@@ -52,7 +46,6 @@ def encrypt_username(user_name, user_id):
     This function encrypt username using caesar cipher
     i.e used for creating seprate folder for each user
     '''
-    print(user_name, user_id)
     result = ""
     for i in range(len(user_name)):
         char = user_name[i]
@@ -79,7 +72,6 @@ def resizeImage(file, size, filename,downloaded):
             raise UnsupportedMediaType('Invalid Image type')    
         im = Image.open(file)
         format = im.format
-        print(format)
     try:
         width, height = size.split('x')
         im = im.resize((int(width), int(height)), PIL.Image.ANTIALIAS)
@@ -98,7 +90,6 @@ def createFieldImage(im, filename, format):
         im = im.save(imgByteArr, format=format)
         imgByteArr = imgByteArr.getvalue()
         ok = ContentFile(imgByteArr)
-        print("tested")
         return InMemoryUploadedFile(ok, None, filename, 'image/'+format, ok.tell, None)
     except:
         raise ParseError('Failed to decode Image')
