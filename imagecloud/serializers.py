@@ -16,7 +16,7 @@ class FileSerializer(serializers.ModelSerializer):
         '''
         representation = super(
             FileSerializer, self).to_representation(instance)
-        domain_name = "http://localhost:8000"
+        domain_name = "https://scaleimagecloud.herokuapp.com"
         full_path = domain_name + instance.file.url
         representation['file'] = full_path
         return representation
