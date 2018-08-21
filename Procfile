@@ -1,2 +1,2 @@
-web: gunicorn imagecloud.wsgi --log-file -
+web: gunicorn scalelabs.wsgi --log-file -
 
